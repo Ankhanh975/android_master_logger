@@ -29,7 +29,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:padding="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -44,7 +45,7 @@
                         android:id="@+id/tvGpsStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/tracking_inactive"
+                        android:text="GPS Inactive"
                         android:textColor="@color/colorSurface"
                         android:textSize="16sp" />
 
@@ -52,7 +53,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Current Location Card -->
+            <!-- GPS Data Card -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/TelemetryCard"
                 android:layout_width="match_parent"
@@ -62,12 +63,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/current_location"
+                        android:text="Current GPS Data"
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -83,7 +85,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/latitude"
+                            android:text="Latitude:"
                             android:textColor="@color/colorTextSecondary"
                             android:textSize="14sp" />
 
@@ -108,7 +110,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/longitude"
+                            android:text="Longitude:"
                             android:textColor="@color/colorTextSecondary"
                             android:textSize="14sp" />
 
@@ -133,7 +135,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/speed"
+                            android:text="Speed:"
                             android:textColor="@color/colorTextSecondary"
                             android:textSize="14sp" />
 
@@ -158,7 +160,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/accuracy"
+                            android:text="Accuracy:"
                             android:textColor="@color/colorTextSecondary"
                             android:textSize="14sp" />
 
@@ -182,7 +184,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/altitude"
+                            android:text="Altitude:"
                             android:textColor="@color/colorTextSecondary"
                             android:textSize="14sp" />
 
@@ -201,35 +203,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Control Buttons -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="16dp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnStartStop"
-                    style="@style/ActionButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text="@string/start_tracking"
-                    android:layout_marginBottom="12dp"
-                    app:backgroundTint="@color/colorSuccess" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnViewHistory"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text="@string/view_history"
-                    app:backgroundTint="@color/colorPrimary"
-                    app:strokeColor="@color/colorPrimary"
-                    app:strokeWidth="2dp" />
-
-            </LinearLayout>
-
-            <!-- Session Info Card -->
+            <!-- Info Card -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/TelemetryCard"
                 android:layout_width="match_parent"
@@ -238,65 +212,25 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Session Information"
+                        android:text="Instructions"
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="16dp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="8dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/session_duration"
-                            android:textColor="@color/colorTextSecondary"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/tvSessionDuration"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="00:00:00"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/points_recorded"
-                            android:textColor="@color/colorTextSecondary"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/tvPointsRecorded"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
+                        android:text="• GPS data updates every 3 seconds\n• Use navigation menu to control tracking\n• 'Tracking' starts GPS updates\n• 'Clear' stops GPS updates"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="4dp" />
 
                 </LinearLayout>
 

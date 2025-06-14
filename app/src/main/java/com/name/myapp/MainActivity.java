@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,20 +24,15 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
-    private static final long UPDATE_INTERVAL = 1000; // 1 second
-    private static final long FASTEST_INTERVAL = 500; // 500ms
+    private static final long UPDATE_INTERVAL = 3000; // 3 seconds
+    private static final long FASTEST_INTERVAL = 2000; // 2 seconds
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -50,17 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private LocationRequest locationRequest;
 
     // UI Components
-    private TextView tvGpsStatus, tvLatitude, tvLongitude, tvSpeed, tvAccuracy, tvAltitude;
-    private TextView tvSessionDuration, tvPointsRecorded;
-    private MaterialButton btnStartStop, btnViewHistory;
-
-    // Tracking State
-    private boolean isTracking = false;
-    private long sessionStartTime = 0;
-    private int pointsRecorded = 0;
-    private List<Location> locationHistory = new ArrayList<>();
-    private Handler sessionHandler = new Handler(Looper.getMainLooper());
-    private Runnable sessionRunnable;
+    private TextView tvLatitude, tvLongitude, tvSpeed, tvAccuracy, tvAltitude, tvGpsStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,24 +54,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initializeViews();
         setupNavigationDrawer();
         setupLocationServices();
-        setupClickListeners();
+        
+        // Request location permission and start GPS updates
+        if (checkLocationPermission()) {
+            startLocationUpdates();
+        } else {
+            requestLocationPermission();
+        }
     }
 
     private void initializeViews() {
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
         
-        tvGpsStatus = findViewById(R.id.tvGpsStatus);
         tvLatitude = findViewById(R.id.tvLatitude);
         tvLongitude = findViewById(R.id.tvLongitude);
         tvSpeed = findViewById(R.id.tvSpeed);
         tvAccuracy = findViewById(R.id.tvAccuracy);
         tvAltitude = findViewById(R.id.tvAltitude);
-        tvSessionDuration = findViewById(R.id.tvSessionDuration);
-        tvPointsRecorded = findViewById(R.id.tvPointsRecorded);
-        
-        btnStartStop = findViewById(R.id.btnStartStop);
-        btnViewHistory = findViewById(R.id.btnViewHistory);
+        tvGpsStatus = findViewById(R.id.tvGpsStatus);
     }
 
     private void setupNavigationDrawer() {
@@ -118,82 +103,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 
                 for (Location location : locationResult.getLocations()) {
                     updateLocationUI(location);
-                    if (isTracking) {
-                        locationHistory.add(location);
-                        pointsRecorded++;
-                        updateSessionInfo();
-                    }
                 }
             }
         };
-    }
-
-    private void setupClickListeners() {
-        btnStartStop.setOnClickListener(v -> toggleTracking());
-        btnViewHistory.setOnClickListener(v -> showHistory());
-        
-        sessionRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (isTracking) {
-                    updateSessionDuration();
-                    sessionHandler.postDelayed(this, 1000);
-                }
-            }
-        };
-    }
-
-    private void toggleTracking() {
-        if (!isTracking) {
-            startTracking();
-        } else {
-            stopTracking();
-        }
-    }
-
-    private void startTracking() {
-        if (checkLocationPermission()) {
-            isTracking = true;
-            sessionStartTime = System.currentTimeMillis();
-            pointsRecorded = 0;
-            locationHistory.clear();
-            
-            btnStartStop.setText(R.string.stop_tracking);
-            btnStartStop.setBackgroundTintList(getColorStateList(R.color.colorError));
-            tvGpsStatus.setText(R.string.tracking_active);
-            tvGpsStatus.setTextColor(getColor(R.color.colorGPSActive));
-            
-            startLocationUpdates();
-            sessionHandler.post(sessionRunnable);
-            
-            Toast.makeText(this, R.string.tracking_started, Toast.LENGTH_SHORT).show();
-        } else {
-            requestLocationPermission();
-        }
-    }
-
-    private void stopTracking() {
-        isTracking = false;
-        
-        btnStartStop.setText(R.string.start_tracking);
-        btnStartStop.setBackgroundTintList(getColorStateList(R.color.colorSuccess));
-        tvGpsStatus.setText(R.string.tracking_inactive);
-        tvGpsStatus.setTextColor(getColor(R.color.colorGPSInactive));
-        
-        stopLocationUpdates();
-        sessionHandler.removeCallbacks(sessionRunnable);
-        
-        Toast.makeText(this, R.string.tracking_stopped, Toast.LENGTH_SHORT).show();
-    }
-
-    private void startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, getMainLooper());
-        }
-    }
-
-    private void stopLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback);
     }
 
     private void updateLocationUI(Location location) {
@@ -219,32 +131,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else {
                 tvAltitude.setText("--");
             }
-        }
-    }
-
-    private void updateSessionDuration() {
-        if (sessionStartTime > 0) {
-            long elapsed = System.currentTimeMillis() - sessionStartTime;
-            long hours = elapsed / (1000 * 60 * 60);
-            long minutes = (elapsed % (1000 * 60 * 60)) / (1000 * 60);
-            long seconds = (elapsed % (1000 * 60)) / 1000;
             
-            String duration = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
-            tvSessionDuration.setText(duration);
+            tvGpsStatus.setText("GPS Active - Updated every 3s");
+            tvGpsStatus.setTextColor(getColor(R.color.colorGPSActive));
         }
     }
 
-    private void updateSessionInfo() {
-        tvPointsRecorded.setText(String.valueOf(pointsRecorded));
+    private void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, getMainLooper());
+            tvGpsStatus.setText("GPS Active - Updated every 3s");
+            tvGpsStatus.setTextColor(getColor(R.color.colorGPSActive));
+        }
     }
 
-    private void showHistory() {
-        if (locationHistory.isEmpty()) {
-            Toast.makeText(this, R.string.no_history, Toast.LENGTH_SHORT).show();
-        } else {
-            String message = String.format("Recorded %d GPS points", locationHistory.size());
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        }
+    private void stopLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback);
+        tvGpsStatus.setText("GPS Inactive");
+        tvGpsStatus.setTextColor(getColor(R.color.colorGPSInactive));
     }
 
     private boolean checkLocationPermission() {
@@ -262,9 +166,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startTracking();
+                startLocationUpdates();
             } else {
                 Toast.makeText(this, R.string.permission_required, Toast.LENGTH_LONG).show();
+                tvGpsStatus.setText("GPS Permission Denied");
+                tvGpsStatus.setTextColor(getColor(R.color.colorGPSInactive));
             }
         }
     }
@@ -274,39 +180,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         
         if (id == R.id.nav_tracking) {
-            toggleTracking();
+            if (checkLocationPermission()) {
+                startLocationUpdates();
+                Toast.makeText(this, "GPS tracking started", Toast.LENGTH_SHORT).show();
+            } else {
+                requestLocationPermission();
+            }
         } else if (id == R.id.nav_history) {
-            showHistory();
+            Toast.makeText(this, "History option selected", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_export) {
-            exportData();
+            Toast.makeText(this, "Export option selected", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_clear) {
-            clearHistory();
+            stopLocationUpdates();
+            clearLocationData();
+            Toast.makeText(this, "GPS tracking stopped", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_settings) {
-            showSettings();
+            Toast.makeText(this, "Settings option selected", Toast.LENGTH_SHORT).show();
         }
         
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private void exportData() {
-        if (locationHistory.isEmpty()) {
-            Toast.makeText(this, R.string.no_history, Toast.LENGTH_SHORT).show();
-        } else {
-            // Simple export - just show a toast for now
-            Toast.makeText(this, R.string.data_exported, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void clearHistory() {
-        locationHistory.clear();
-        pointsRecorded = 0;
-        updateSessionInfo();
-        Toast.makeText(this, "History cleared", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showSettings() {
-        Toast.makeText(this, "Settings coming soon", Toast.LENGTH_SHORT).show();
+    private void clearLocationData() {
+        tvLatitude.setText("--");
+        tvLongitude.setText("--");
+        tvSpeed.setText("--");
+        tvAccuracy.setText("--");
+        tvAltitude.setText("--");
     }
 
     @Override
@@ -330,8 +231,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onDestroy() {
         super.onDestroy();
         stopLocationUpdates();
-        if (sessionHandler != null) {
-            sessionHandler.removeCallbacks(sessionRunnable);
-        }
     }
 }
