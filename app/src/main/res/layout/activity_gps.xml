@@ -48,17 +48,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Device Telemetry"
+                        android:text="GPS Data"
                         android:textColor="@color/colorSurface"
                         android:textSize="24sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp" />
 
                     <TextView
-                        android:id="@+id/tvSensorStatus"
+                        android:id="@+id/tvGpsStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sensors Inactive"
+                        android:text="GPS Inactive"
                         android:textColor="@color/colorSurface"
                         android:textSize="16sp" />
 
@@ -66,7 +66,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Acceleration Data Card -->
+            <!-- GPS Data Card -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/TelemetryCard"
                 android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Acceleration Data"
+                        android:text="Current GPS Data"
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -98,12 +98,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="X-Axis:"
+                            android:text="Latitude:"
                             android:textColor="@color/colorTextSecondary"
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/tvAccelX"
+                            android:id="@+id/tvLatitude"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="--"
@@ -123,12 +123,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Y-Axis:"
+                            android:text="Longitude:"
                             android:textColor="@color/colorTextSecondary"
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/tvAccelY"
+                            android:id="@+id/tvLongitude"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="--"
@@ -148,187 +148,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Z-Axis:"
+                            android:text="Speed:"
                             android:textColor="@color/colorTextSecondary"
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/tvAccelZ"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Magnitude:"
-                            android:textColor="@color/colorTextSecondary"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/tvAccelMagnitude"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Rotation Data Card -->
-            <com.google.android.material.card.MaterialCardView
-                style="@style/TelemetryCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rotation Data"
-                        android:textColor="@color/colorTextPrimary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="16dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="8dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Azimuth:"
-                            android:textColor="@color/colorTextSecondary"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/tvRotationAzimuth"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="8dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Pitch:"
-                            android:textColor="@color/colorTextSecondary"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/tvRotationPitch"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Roll:"
-                            android:textColor="@color/colorTextSecondary"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/tvRotationRoll"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Sensor Information Card -->
-            <com.google.android.material.card.MaterialCardView
-                style="@style/TelemetryCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sensor Information"
-                        android:textColor="@color/colorTextPrimary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="16dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="8dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Update Rate:"
-                            android:textColor="@color/colorTextSecondary"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/tvUpdateRate"
+                            android:id="@+id/tvSpeed"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="--"
@@ -353,7 +178,132 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/tvSensorAccuracy"
+                            android:id="@+id/tvAccuracy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Altitude:"
+                            android:textColor="@color/colorTextSecondary"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvAltitude"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Satellite Information Card -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/TelemetryCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Satellite Information"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Satellites Visible:"
+                            android:textColor="@color/colorTextSecondary"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvSatelliteCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Signal Quality:"
+                            android:textColor="@color/colorTextSecondary"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvSignalStrength"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Provider Status:"
+                            android:textColor="@color/colorTextSecondary"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvProviderInfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="--"
@@ -366,7 +316,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sensor Details:"
+                        android:text="Satellite Details:"
                         android:textColor="@color/colorTextSecondary"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -379,10 +329,10 @@
                         android:maxHeight="120dp">
 
                         <TextView
-                            android:id="@+id/tvSensorInfo"
+                            android:id="@+id/tvSatelliteInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="No sensor data available"
+                            android:text="No satellite data available"
                             android:textColor="@color/colorTextSecondary"
                             android:textSize="12sp"
                             android:fontFamily="monospace" />
@@ -408,7 +358,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Telemetry Information"
+                        android:text="GPS Information"
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -417,7 +367,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="• Telemetry data updates every 3 seconds automatically\n• Acceleration is measured in m/s²\n• Rotation is measured in degrees\n• Sensor permissions may be required for full functionality"
+                        android:text="• GPS data updates every 3 seconds automatically\n• Location permission is required for GPS functionality\n• Supports multiple satellite constellations (GPS, GLONASS, BeiDou, Galileo)\n• Signal strength and accuracy information provided"
                         android:textColor="@color/colorTextSecondary"
                         android:textSize="14sp"
                         android:lineSpacingExtra="4dp" />
