@@ -1,0 +1,38 @@
+// list of plugin required for building this project
+plugins {
+  id 'com.android.application'
+}
+
+// settings required for android plugin
+android {
+    namespace 'com.name.myapp' //directory of java class files
+
+    compileSdkVersion 33 //compile app for this version of API
+    defaultConfig {
+        applicationId 'com.name.myapp' //set id for app
+        minSdkVersion 21 //minimum API this app supports
+        targetSdkVersion 33 //compile for this API
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'androidx.recyclerview:recyclerview:1.3.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+}
