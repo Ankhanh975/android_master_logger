@@ -11,6 +11,16 @@
             android:id="@+id/nav_gps_guide"
             android:icon="@android:drawable/ic_menu_help"
             android:title="GPS Guide" />
+            
+        <item
+            android:id="@+id/nav_telemetry"
+            android:icon="@android:drawable/ic_menu_view"
+            android:title="Telemetry Data" />
+            
+        <item
+            android:id="@+id/nav_sensor_info"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="Sensor Information" />
     </group>
     
 </menu> 
