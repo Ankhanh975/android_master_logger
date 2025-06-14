@@ -218,7 +218,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Instructions"
+                        android:text="GPS Information"
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -227,7 +227,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="• GPS data updates every 3 seconds\n• Use navigation menu to control tracking\n• 'Tracking' starts GPS updates\n• 'Clear' stops GPS updates"
+                        android:text="• GPS data updates every 3 seconds automatically\n• Use the navigation menu to access GPS features\n• Location permission is required for GPS functionality"
                         android:textColor="@color/colorTextSecondary"
                         android:textSize="14sp"
                         android:lineSpacingExtra="4dp" />

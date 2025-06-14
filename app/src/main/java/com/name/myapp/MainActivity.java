@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -145,12 +143,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void stopLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback);
-        tvGpsStatus.setText("GPS Inactive");
-        tvGpsStatus.setTextColor(getColor(R.color.colorGPSInactive));
-    }
-
     private boolean checkLocationPermission() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
@@ -179,35 +171,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         
-        if (id == R.id.nav_tracking) {
-            if (checkLocationPermission()) {
-                startLocationUpdates();
-                Toast.makeText(this, "GPS tracking started", Toast.LENGTH_SHORT).show();
-            } else {
-                requestLocationPermission();
-            }
-        } else if (id == R.id.nav_history) {
-            Toast.makeText(this, "History option selected", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_export) {
-            Toast.makeText(this, "Export option selected", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_clear) {
-            stopLocationUpdates();
-            clearLocationData();
-            Toast.makeText(this, "GPS tracking stopped", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_settings) {
-            Toast.makeText(this, "Settings option selected", Toast.LENGTH_SHORT).show();
+        if (id == R.id.nav_gps) {
+            Toast.makeText(this, "GPS Data", Toast.LENGTH_SHORT).show();
         }
         
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void clearLocationData() {
-        tvLatitude.setText("--");
-        tvLongitude.setText("--");
-        tvSpeed.setText("--");
-        tvAccuracy.setText("--");
-        tvAltitude.setText("--");
     }
 
     @Override
@@ -230,6 +199,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopLocationUpdates();
+        if (fusedLocationClient != null && locationCallback != null) {
+            fusedLocationClient.removeLocationUpdates(locationCallback);
+        }
     }
 }

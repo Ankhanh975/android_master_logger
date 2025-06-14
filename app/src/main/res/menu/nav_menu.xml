@@ -3,29 +3,9 @@
     
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_tracking"
+            android:id="@+id/nav_gps"
             android:icon="@android:drawable/ic_menu_mylocation"
-            android:title="@string/start_tracking" />
-        
-        <item
-            android:id="@+id/nav_history"
-            android:icon="@android:drawable/ic_menu_recent_history"
-            android:title="@string/view_history" />
-        
-        <item
-            android:id="@+id/nav_export"
-            android:icon="@android:drawable/ic_menu_share"
-            android:title="@string/export_data" />
-        
-        <item
-            android:id="@+id/nav_clear"
-            android:icon="@android:drawable/ic_menu_delete"
-            android:title="@string/clear_history" />
-        
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@android:drawable/ic_menu_preferences"
-            android:title="@string/settings" />
+            android:title="GPS" />
     </group>
     
 </menu> 
