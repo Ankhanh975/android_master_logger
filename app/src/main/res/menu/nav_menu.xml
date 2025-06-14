@@ -6,6 +6,11 @@
             android:id="@+id/nav_gps"
             android:icon="@android:drawable/ic_menu_mylocation"
             android:title="GPS" />
+        
+        <item
+            android:id="@+id/nav_gps_guide"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="GPS Guide" />
     </group>
     
 </menu> 
